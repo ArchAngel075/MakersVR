@@ -86,7 +86,7 @@ void unmapmem(void *addr, unsigned size)
 
 static int mbox_property(int file_desc, void *buf)
 {
-   printf("ioctl on mbox_property")
+   printf("ioctl on mbox_property");
    int ret_val = ioctl(file_desc, IOCTL_MBOX_PROPERTY, buf);
 
    if (ret_val < 0) {
