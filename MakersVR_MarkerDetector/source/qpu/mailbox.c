@@ -38,7 +38,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "mailbox.h"
 
 #define PAGE_SIZE (4*1024)
-#define DEBUG
 
 void *mapmem(unsigned base, unsigned size)
 {
@@ -87,9 +86,8 @@ void unmapmem(void *addr, unsigned size)
 
 static int mbox_property(int file_desc, void *buf)
 {
-   printf("ioctl on mbox_property\n");
    int ret_val = ioctl(file_desc, IOCTL_MBOX_PROPERTY, buf);
-   printf("ioctl_set_msg result :%d\n", ret_val);
+
    if (ret_val < 0) {
       printf("ioctl_set_msg failed:%d\n", ret_val);
    }
@@ -220,7 +218,7 @@ unsigned qpu_enable(int file_desc, unsigned enable)
 
    p[i++] = 0x00000000; // end tag
    p[0] = i*sizeof *p; // actual size
-   printf("->qpu enable->");
+
    mbox_property(file_desc, p);
    return p[5];
 }
