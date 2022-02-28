@@ -38,6 +38,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "mailbox.h"
 
 #define PAGE_SIZE (4*1024)
+#define DEBUG
 
 void *mapmem(unsigned base, unsigned size)
 {
