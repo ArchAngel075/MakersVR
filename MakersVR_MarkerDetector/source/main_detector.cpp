@@ -647,11 +647,11 @@ phase_blobdetection:
 		// Enable QPU
 		int qpue = qpu_enable(base.mb, 1);
 		printf("QPU return p[5] :%d\n",qpue);
-		if (qpue || true) {
-			printf("QPU enable failed!\n");
-			error = true;
-			goto error_qpu;
-		}
+		// if (qpue) {
+		// 	printf("QPU enable failed!\n");
+		// 	error = true;
+		// 	goto error_qpu;
+		// }
 		printf("-- QPU Enabled --\n");
 
 		// Debug QPU Hardware
