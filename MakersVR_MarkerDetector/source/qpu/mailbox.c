@@ -86,6 +86,7 @@ void unmapmem(void *addr, unsigned size)
 
 static int mbox_property(int file_desc, void *buf)
 {
+   printf("ioctl on mbox_property")
    int ret_val = ioctl(file_desc, IOCTL_MBOX_PROPERTY, buf);
 
    if (ret_val < 0) {
@@ -218,7 +219,7 @@ unsigned qpu_enable(int file_desc, unsigned enable)
 
    p[i++] = 0x00000000; // end tag
    p[0] = i*sizeof *p; // actual size
-
+   printf("->qpu enable->");
    mbox_property(file_desc, p);
    return p[5];
 }
