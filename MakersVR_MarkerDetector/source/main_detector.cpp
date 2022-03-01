@@ -970,12 +970,12 @@ phase_blobdetection:
 						};
 
 						const char* packet_str[] = {
-							(char)'{',
-							(char)((uint8_t)blobs[0].centroid.X),
-							(char)((uint8_t)blobs[0].centroid.Y),
-							(char)((uint8_t)blobs[0].centroid.S),
-							(char)((uint8_t)colors[0].R),(char)((uint8_t)colors[0].G),(char)((uint8_t)colors[0].B),
-							(char)'}'
+							(const char*)'{',
+							(const char*)((uint8_t)blobs[0].centroid.X),
+							(const char*)((uint8_t)blobs[0].centroid.Y),
+							(const char*)((uint8_t)blobs[0].centroid.S),
+							(const char*)((uint8_t)colors[0].R),(char)((uint8_t)colors[0].G),(char)((uint8_t)colors[0].B),
+							(const char*)'}'
 						};
 						//std::string packet = "{\"x\":" + xstr + ",\"y\":" + ystr +"}";
 						//std::string s( reinterpret_cast< char const* >(packet) ) ;
