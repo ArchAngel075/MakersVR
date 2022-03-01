@@ -974,7 +974,7 @@ phase_blobdetection:
 						const char* packet_cstr = s.c_str();
 						if(useSOCK){
 							printf("send packet %s",packet_cstr);
-							send(sock, packetChar, strlen(packetChar), 0);
+							// send(sock, packetChar, strlen(packetChar), 0);
 						}
 						if(spoofSOCK)
 							printf("preview packet %s",packet_cstr);
