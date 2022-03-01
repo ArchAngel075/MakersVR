@@ -941,8 +941,22 @@ phase_blobdetection:
 	
 				// Unlock target buffer
 				qpu_unlockBuffer(&bitmskBuffer);
-				
-				if(useSOCK || spoofSOCK)
+				if(useSOCK && spoofSOCK)
+				{
+					uint8_t packet[] = {
+						'{',
+						(uint8_t)1.0f,
+						(uint8_t)1.0f,
+						(uint8_t)4.0f,
+						(uint8_t)255.0f,(uint8_t)0.0f,(uint8_t)0.0f,
+						'}'
+					};	
+					char* packetChar = reinterpret_cast<char*>(packet);
+					printf("send packet '%s'\n",packetChar);
+					send(sock, packetChar, strlen(packetChar), 0);
+				}
+
+				if(useSOCK && !spoofSOCK)
 				{
 					//int resultSend = send(sock, "ping", strlen("ping"), 0);
 					//printf("send result %d\n",resultSend);
@@ -968,23 +982,12 @@ phase_blobdetection:
 							(uint8_t)colors[0].R,(uint8_t)colors[0].G,(uint8_t)colors[0].B,
 							'}'
 						};
-						// char* packetstr[] = {'{',
-						// 	(char*)blobs[0].centroid.X,
-						// 	(char*)blobs[0].centroid.Y,
-						// 	(char*)blobs[0].centroid.S,
-						// 	(char*)colors[0].R,(char*)colors[0].G,(char*)colors[0].B,
-						// 	'}'
-						// };
 						//std::string packet = "{\"x\":" + xstr + ",\"y\":" + ystr +"}";
 						char* packetChar = reinterpret_cast<char*>(packet);
 						// const char* packet_cstr = packetChar.c_str();
 						if(useSOCK){
 							printf("send packet '%s'\n",packetChar);
 							send(sock, packetChar, strlen(packetChar), 0);
-						}
-						if(spoofSOCK){
-							// printf("preview packet '%s'\n",packetstr);
-							printf("preview packet '%s'\n",packet);
 						}
 					}
 				}	
