@@ -184,10 +184,11 @@ int main(int argc, char **argv)
 	bool debugViz = false;
 	bool useUART = false;
 	bool useSOCK = false;
+	bool spoofSOCK = false;
 	int sock = -1;
 
 	int arg;
-	while ((arg = getopt(argc, argv, "c:w:h:f:s:g:m:n:q:pzdui")) != -1)
+	while ((arg = getopt(argc, argv, "c:w:h:f:s:g:m:n:q:pzduij")) != -1)
 	{
 		switch (arg)
 		{
@@ -238,14 +239,17 @@ int main(int argc, char **argv)
 			case 'i':
 				useSOCK = true;
 				break;
+			case 'j':
+				spoofSOCK = true;
+				break;
 			default:
-				printf("Usage: %s -c codefile [-w width] [-h height] [-f fps] [-s shutter-speed-ns] [-g analog gain {0,16}] [-m main threshold 0-1] [-n diff threshold 0-1] [-q QPU mask {0,1}^12] [-p disable padding] [-z Zero compat mode] [-d debug visualization]\n", argv[0]);
+				printf("Usage: %s -c codefile [-w width] [-h height] [-f fps] [-s shutter-speed-ns] [-g analog gain {0,16}] [-m main threshold 0-1] [-n diff threshold 0-1] [-q QPU mask {0,1}^12] [-p disable padding] [-z Zero compat mode] [-d debug visualization] [-j preview packet data]\n", argv[0]);
 				return -1;
 		}
 	}
 	if (optind < argc - 1)
 	{
-		printf("Usage: %s -c codefile [-w width] [-h height] [-f fps] [-s shutter-speed-ns] [-g analog gain {0,16}] [-m main threshold 0-1] [-n diff threshold 0-1] [-q QPU mask {0,1}^12] [-p disable padding] [-z Zero compat mode] [-d debug visualization]\n", argv[0]);
+		printf("Usage: %s -c codefile [-w width] [-h height] [-f fps] [-s shutter-speed-ns] [-g analog gain {0,16}] [-m main threshold 0-1] [-n diff threshold 0-1] [-q QPU mask {0,1}^12] [-p disable padding] [-z Zero compat mode] [-d debug visualization] [-j preview packet data]\n", argv[0]);
 		return -1;
 	}
 
@@ -329,7 +333,7 @@ abort:
 			sock = socket(AF_INET,SOCK_STREAM,0);
 			printf("\n sock initiation resulted in %d\n", (int)sock);
 			serv_addr.sin_family = AF_INET;
-			serv_addr.sin_port = htons(50001);
+			serv_addr.sin_port = htons(50000); //50001
 			
 			inet_pton(AF_INET, "192.168.0.109" ,&serv_addr.sin_addr);
 			
@@ -938,7 +942,7 @@ phase_blobdetection:
 				// Unlock target buffer
 				qpu_unlockBuffer(&bitmskBuffer);
 				
-				if(useSOCK)
+				if(useSOCK || spoofSOCK)
 				{
 					//int resultSend = send(sock, "ping", strlen("ping"), 0);
 					//printf("send result %d\n",resultSend);
@@ -965,10 +969,14 @@ phase_blobdetection:
 							'}'
 						};
 						//std::string packet = "{\"x\":" + xstr + ",\"y\":" + ystr +"}";
-						//const char* packet_cstr = packet.c_str();
-						//printf("send packet %s",packet_cstr);
 						char* packetChar = reinterpret_cast<char*>(packet);
-						send(sock, packetChar, strlen(packetChar), 0);
+						const char* packet_cstr = packetChar.c_str();
+						if(useSOCK){
+							printf("send packet %s",packet_cstr);
+							send(sock, packetChar, strlen(packetChar), 0);
+						}
+						if(spoofSOCK)
+							printf("preview packet %s",packet_cstr);
 					}
 				}	
 
