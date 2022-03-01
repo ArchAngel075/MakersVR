@@ -186,9 +186,10 @@ int main(int argc, char **argv)
 	bool useSOCK = false;
 	bool spoofSOCK = false;
 	int sock = -1;
+	int identifier = -1;
 
 	int arg;
-	while ((arg = getopt(argc, argv, "c:w:h:f:s:g:m:n:q:pzduij")) != -1)
+	while ((arg = getopt(argc, argv, "c:w:h:f:s:g:m:n:l:q:pzduij")) != -1)
 	{
 		switch (arg)
 		{
@@ -220,6 +221,8 @@ int main(int argc, char **argv)
 			case 'n':
 				diffCO = 255*std::stof(optarg);
 				break;
+			case 'l':
+				identifier = std::stoi(optarg);
 			case 'q':
 				for (int i = 0; i < 12 && i < strlen(optarg); i++)
 					enableQPU[i] = optarg[i] == '1';
@@ -243,13 +246,13 @@ int main(int argc, char **argv)
 				spoofSOCK = true;
 				break;
 			default:
-				printf("Usage: %s -c codefile [-w width] [-h height] [-f fps] [-s shutter-speed-ns] [-g analog gain {0,16}] [-m main threshold 0-1] [-n diff threshold 0-1] [-q QPU mask {0,1}^12] [-p disable padding] [-z Zero compat mode] [-d debug visualization] [-j preview packet data]\n", argv[0]);
+				printf("Usage: %s -c codefile [-w width] [-h height] [-f fps] [-s shutter-speed-ns] [-g analog gain {0,16}] [-m main threshold 0-1] [-n diff threshold 0-1] [-l (L) identifier of the device] [-q QPU mask {0,1}^12] [-p disable padding] [-z Zero compat mode] [-d debug visualization] [-j preview packet data]\n", argv[0]);
 				return -1;
 		}
 	}
 	if (optind < argc - 1)
 	{
-		printf("Usage: %s -c codefile [-w width] [-h height] [-f fps] [-s shutter-speed-ns] [-g analog gain {0,16}] [-m main threshold 0-1] [-n diff threshold 0-1] [-q QPU mask {0,1}^12] [-p disable padding] [-z Zero compat mode] [-d debug visualization] [-j preview packet data]\n", argv[0]);
+		printf("Usage: %s -c codefile [-w width] [-h height] [-f fps] [-s shutter-speed-ns] [-g analog gain {0,16}] [-m main threshold 0-1] [-n diff threshold 0-1]  [-l (L) identifier of the device] [-q QPU mask {0,1}^12]  [-p disable padding] [-z Zero compat mode] [-d debug visualization] [-j preview packet data]\n", argv[0]);
 		return -1;
 	}
 
@@ -967,8 +970,10 @@ phase_blobdetection:
 					if(blobs.size() > 0){
 						//std::string xstr = std::to_string(blobs[0].centroid.X);
 						//std::string ystr = std::to_string(blobs[0].centroid.Y);
-						//proposed protocol :
+						//proposed protocol v1:
 						// [#][tag][size upper 8 bit][size lower bit][X][Y][S][R][G][B]
+						//proposed protocol v2:
+						// [{][X][Y][I][R][G][B][}]
 						uint8_t body[] = {
 							(uint8_t)blobs[0].centroid.X,
 							(uint8_t)blobs[0].centroid.Y,
@@ -978,7 +983,8 @@ phase_blobdetection:
 						uint8_t packet[] = {'{',
 							(uint8_t)blobs[0].centroid.X,
 							(uint8_t)blobs[0].centroid.Y,
-							(uint8_t)blobs[0].centroid.S,
+							//(uint8_t)blobs[0].centroid.S,
+							(uint8_t)identifier,
 							(uint8_t)colors[0].R,(uint8_t)colors[0].G,(uint8_t)colors[0].B,
 							'}'
 						};
