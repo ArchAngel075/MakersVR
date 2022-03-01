@@ -973,7 +973,7 @@ phase_blobdetection:
 						//proposed protocol v1:
 						// [#][tag][size upper 8 bit][size lower bit][X][Y][S][R][G][B]
 						//proposed protocol v2:
-						// [{][X][Y][I][R][G][B][}]
+						// [{][X][Y][S][I][R][G][B][}]
 						uint8_t body[] = {
 							(uint8_t)blobs[0].centroid.X,
 							(uint8_t)blobs[0].centroid.Y,
@@ -983,7 +983,7 @@ phase_blobdetection:
 						uint8_t packet[] = {'{',
 							(uint8_t)blobs[0].centroid.X,
 							(uint8_t)blobs[0].centroid.Y,
-							//(uint8_t)blobs[0].centroid.S,
+							(uint8_t)blobs[0].centroid.S,
 							(uint8_t)identifier,
 							(uint8_t)colors[0].R,(uint8_t)colors[0].G,(uint8_t)colors[0].B,
 							'}'
