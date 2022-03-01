@@ -970,8 +970,8 @@ phase_blobdetection:
 						};
 						//std::string packet = "{\"x\":" + xstr + ",\"y\":" + ystr +"}";
 						std::string s( reinterpret_cast< char const* >(packet) ) ;
-						char* packetChar = reinterpret_cast<char*>(s);
-						const char* packet_cstr = packet.c_str();
+						// char* packetChar = reinterpret_cast<char*>(s);
+						const char* packet_cstr = s.c_str();
 						if(useSOCK){
 							printf("send packet %s",packet_cstr);
 							send(sock, packetChar, strlen(packetChar), 0);
