@@ -972,11 +972,11 @@ phase_blobdetection:
 						char* packetChar = reinterpret_cast<char*>(packet);
 						// const char* packet_cstr = packetChar.c_str();
 						if(useSOCK){
-							printf("send packet %s",packetChar);
+							printf("send packet '%s'\n",packetChar);
 							send(sock, packetChar, strlen(packetChar), 0);
 						}
 						if(spoofSOCK)
-							printf("preview packet %s",packetChar);
+							printf("preview packet '%s'\n",packetChar);
 					}
 				}	
 
