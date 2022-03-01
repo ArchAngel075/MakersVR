@@ -968,16 +968,25 @@ phase_blobdetection:
 							(uint8_t)colors[0].R,(uint8_t)colors[0].G,(uint8_t)colors[0].B,
 							'}'
 						};
+
+						const char* packet_str[] = {
+							(char)'{',
+							(char)((uint8_t)blobs[0].centroid.X),
+							(char)((uint8_t)blobs[0].centroid.Y),
+							(char)((uint8_t)blobs[0].centroid.S),
+							(char)((uint8_t)colors[0].R),(char)((uint8_t)colors[0].G),(char)((uint8_t)colors[0].B),
+							(char)'}'
+						};
 						//std::string packet = "{\"x\":" + xstr + ",\"y\":" + ystr +"}";
-						std::string s( reinterpret_cast< char const* >(packet) ) ;
-						// char* packetChar = reinterpret_cast<char*>(s);
-						const char* packet_cstr = s.c_str();
+						//std::string s( reinterpret_cast< char const* >(packet) ) ;
+						//char* packetChar = reinterpret_cast<char*>(packet);
+						//const char* packet_cstr = packetChar.c_str();
 						if(useSOCK){
-							printf("send packet %s",packet_cstr);
+							printf("send packet %s\n",packet_str);
 							// send(sock, packetChar, strlen(packetChar), 0);
 						}
 						if(spoofSOCK)
-							printf("preview packet %s",packet_cstr);
+							printf("preview packet %s\n",packet_str);
 					}
 				}	
 
