@@ -968,13 +968,13 @@ phase_blobdetection:
 							(uint8_t)colors[0].R,(uint8_t)colors[0].G,(uint8_t)colors[0].B,
 							'}'
 						};
-						char* packetstr[] = {'{',
-							(char*)blobs[0].centroid.X,
-							(char*)blobs[0].centroid.Y,
-							(char*)blobs[0].centroid.S,
-							(char*)colors[0].R,(char*)colors[0].G,(char*)colors[0].B,
-							'}'
-						};
+						// char* packetstr[] = {'{',
+						// 	(char*)blobs[0].centroid.X,
+						// 	(char*)blobs[0].centroid.Y,
+						// 	(char*)blobs[0].centroid.S,
+						// 	(char*)colors[0].R,(char*)colors[0].G,(char*)colors[0].B,
+						// 	'}'
+						// };
 						//std::string packet = "{\"x\":" + xstr + ",\"y\":" + ystr +"}";
 						char* packetChar = reinterpret_cast<char*>(packet);
 						// const char* packet_cstr = packetChar.c_str();
@@ -982,9 +982,10 @@ phase_blobdetection:
 							printf("send packet '%s'\n",packetChar);
 							send(sock, packetChar, strlen(packetChar), 0);
 						}
-						if(spoofSOCK)
-							printf("preview packet '%s'\n",packetstr);
+						if(spoofSOCK){
+							// printf("preview packet '%s'\n",packetstr);
 							printf("preview packet '%s'\n",packet);
+						}
 					}
 				}	
 
