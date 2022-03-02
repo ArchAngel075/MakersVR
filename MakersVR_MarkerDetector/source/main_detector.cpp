@@ -185,11 +185,15 @@ int main(int argc, char **argv)
 	bool useUART = false;
 	bool useSOCK = false;
 	bool spoofSOCK = false;
+	bool spoofInput = false;
+	bool spoofedInputState = false;
+	int spoofedInputTimeToStateChange = 300;
+	int spoofedInputTimeToStateChangeTarget = 300;
 	int sock = -1;
 	int identifier = -1;
 
 	int arg;
-	while ((arg = getopt(argc, argv, "c:w:h:f:s:g:m:n:l:q:pzduij")) != -1)
+	while ((arg = getopt(argc, argv, "c:w:h:f:s:g:m:n:l:q:pzduijv")) != -1)
 	{
 		switch (arg)
 		{
@@ -244,6 +248,9 @@ int main(int argc, char **argv)
 				break;
 			case 'j':
 				spoofSOCK = true;
+				break;
+			case 'v':
+				spoofInput = true;
 				break;
 			default:
 				printf("Usage: %s -c codefile [-w width] [-h height] [-f fps] [-s shutter-speed-ns] [-g analog gain {0,16}] [-m main threshold 0-1] [-n diff threshold 0-1] [-l (L) identifier of the device] [-q QPU mask {0,1}^12] [-p disable padding] [-z Zero compat mode] [-d debug visualization] [-j preview packet data]\n", argv[0]);
@@ -974,22 +981,53 @@ phase_blobdetection:
 						// [#][tag][size upper 8 bit][size lower bit][X][Y][S][R][G][B]
 						//proposed protocol v2:
 						// [{][X][Y][S][I][R][G][B][}]
+						//proposed position protocol v3:
+						/*
+								0	 1		2  3  4  5  6  7
+							[Type=P][ID] + [X][Y][S][R][G][B]
+						*/
 						uint8_t packet[] = {'{',
+							(uint8_t)'P',
+							(uint8_t)identifier,
 							(uint8_t)blobs[0].centroid.X,
 							(uint8_t)blobs[0].centroid.Y,
 							(uint8_t)blobs[0].centroid.S,
-							(uint8_t)identifier,
 							(uint8_t)colors[0].R,(uint8_t)colors[0].G,(uint8_t)colors[0].B,
 							'}'
 						};
 						//std::string packet = "{\"x\":" + xstr + ",\"y\":" + ystr +"}";
 						char* packetChar = reinterpret_cast<char*>(packet);
 						// const char* packet_cstr = packetChar.c_str();
-						if(useSOCK){
-							printf("send packet '%s'\n",packetChar);
+						printf("send packet '%s'\n",packetChar);
+						send(sock, packetChar, strlen(packetChar), 0);
+					}
+
+					if (spoofInput){
+						spoofedInputTimeToStateChange -= 1;
+						if(spoofedInputTimeToStateChange <= 0){
+							spoofedInputTimeToStateChange = spoofedInputTimeToStateChangeTarget;
+							spoofedInputState != spoofedInputState;
+							//send
+							uint8_t packet[] = {'{',
+								(uint8_t)'I',
+								(uint8_t)2, //blue
+
+								(uint8_t)spoofedInputState ? 1 : 0,
+								(uint8_t)0,
+								(uint8_t)0,
+								(uint8_t)0,
+								(uint8_t)0,
+								(uint8_t)0,
+								(uint8_t)0,
+								(uint8_t)0,
+								'}'
+							};
+							char* packetChar = reinterpret_cast<char*>(packet);
 							send(sock, packetChar, strlen(packetChar), 0);
 						}
+						//on occasion send a button state change, where b1 toggles via spoofedInputState
 					}
+
 				}	
 
 				// ---- Send UART Packet ----
