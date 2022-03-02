@@ -187,8 +187,8 @@ int main(int argc, char **argv)
 	bool spoofSOCK = false;
 	bool spoofInput = false;
 	bool spoofedInputState = false;
-	int spoofedInputTimeToStateChange = 300;
-	int spoofedInputTimeToStateChangeTarget = 300;
+	int spoofedInputTimeToStateChange = 200;
+	int spoofedInputTimeToStateChangeTarget = 200;
 	int sock = -1;
 	int identifier = -1;
 
@@ -998,8 +998,8 @@ phase_blobdetection:
 						//std::string packet = "{\"x\":" + xstr + ",\"y\":" + ystr +"}";
 						char* packetChar = reinterpret_cast<char*>(packet);
 						// const char* packet_cstr = packetChar.c_str();
-						printf("send packet '%s'\n",packetChar);
-						send(sock, packetChar, strlen(packetChar), 0);
+						//printf("send packet '%s'\n",packetChar);
+						//send(sock, packetChar, strlen(packetChar), 0);
 					}
 
 					if (spoofInput){
@@ -1012,14 +1012,14 @@ phase_blobdetection:
 								(uint8_t)'I',
 								(uint8_t)2, //blue
 
-								(uint8_t)(spoofedInputState ? 1 : 0),
-								(uint8_t)0,
-								(uint8_t)0,
-								(uint8_t)0,
-								(uint8_t)0,
-								(uint8_t)0,
-								(uint8_t)0,
-								(uint8_t)0,
+								(uint8_t)(spoofedInputState ? 20 : 2),
+								(uint8_t)2,
+								(uint8_t)2,
+								(uint8_t)2,
+								(uint8_t)2,
+								(uint8_t)2,
+								(uint8_t)2,
+								(uint8_t)2,
 								'}'
 							};
 							char* packetChar = reinterpret_cast<char*>(packet);
