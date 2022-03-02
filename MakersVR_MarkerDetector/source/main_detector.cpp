@@ -1022,8 +1022,8 @@ phase_blobdetection:
 								(uint8_t)0,
 								'}'
 							};
-							printf("send input packet '%s'\n",packetChar);
 							char* packetChar = reinterpret_cast<char*>(packet);
+							printf("send input packet '%s'\n",packetChar);
 							send(sock, packetChar, strlen(packetChar), 0);
 						}
 						//on occasion send a button state change, where b1 toggles via spoofedInputState
