@@ -1012,7 +1012,7 @@ phase_blobdetection:
 								(uint8_t)'I',
 								(uint8_t)2, //blue
 
-								(uint8_t)spoofedInputState ? 1 : 0,
+								(uint8_t)(spoofedInputState ? 1 : 0),
 								(uint8_t)0,
 								(uint8_t)0,
 								(uint8_t)0,
