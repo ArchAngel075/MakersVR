@@ -890,7 +890,7 @@ phase_blobdetection:
 				
 				performBlobDetectionCPU(blobs);
 				
-				printf("Found %d Blobs!\n", (int)blobs.size());
+				// printf("Found %d Blobs!\n", (int)blobs.size());
 				Color colors[blobs.size()];
 				uint8_t* buffer = (uint8_t*)cameraBuffer;
 				for (int i = 0; i < blobs.size(); i++)
@@ -1022,6 +1022,7 @@ phase_blobdetection:
 								(uint8_t)0,
 								'}'
 							};
+							printf("send input packet '%s'\n",packetChar);
 							char* packetChar = reinterpret_cast<char*>(packet);
 							send(sock, packetChar, strlen(packetChar), 0);
 						}
