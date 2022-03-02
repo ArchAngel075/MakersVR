@@ -1006,7 +1006,7 @@ phase_blobdetection:
 						spoofedInputTimeToStateChange -= 1;
 						if(spoofedInputTimeToStateChange <= 0){
 							spoofedInputTimeToStateChange = spoofedInputTimeToStateChangeTarget;
-							spoofedInputState != spoofedInputState;
+							spoofedInputState = !spoofedInputState;
 							//send
 							uint8_t packet[] = {'{',
 								(uint8_t)'I',
