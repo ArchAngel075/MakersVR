@@ -989,10 +989,11 @@ phase_blobdetection:
 						int packet[] = {(int)'{',
 							(int)'P',
 							(int)identifier,
-							(int)blobs[0].centroid.X,
-							(int)blobs[0].centroid.Y,
-							(int)blobs[0].centroid.S,
-							(int)colors[0].R,(int)colors[0].G,(int)colors[0].B,
+							-100,//(int)blobs[0].centroid.X,
+							200,//(int)blobs[0].centroid.Y,
+							99,//(int)blobs[0].centroid.S,
+							//(int)colors[0].R,(int)colors[0].G,(int)colors[0].B,
+							10,5,3,
 							(int)'}'
 						};
 						//std::string packet = "{\"x\":" + xstr + ",\"y\":" + ystr +"}";
