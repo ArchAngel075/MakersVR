@@ -979,6 +979,8 @@ phase_blobdetection:
 					send(sock, packetChar, strlen(packetChar), 0);
 				}
 
+				constructPacket(0,10,-20,4,100,-100,5);
+				
 				if(useSOCK && !spoofSOCK)
 				{
 					//int resultSend = send(sock, "ping", strlen("ping"), 0);
@@ -987,7 +989,7 @@ phase_blobdetection:
 						//fprintf(stderr,"recv: %s (%d)\n",strerror(errno),errno);
 						//printf("received error during attempt to send\n");
 					//}
-					constructPacket(0,10,-20,4,100,-100,5);
+					
 					if(blobs.size() > 0){
 						//std::string xstr = std::to_string(blobs[0].centroid.X);
 						//std::string ystr = std::to_string(blobs[0].centroid.Y);
