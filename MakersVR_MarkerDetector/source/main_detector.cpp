@@ -986,25 +986,30 @@ phase_blobdetection:
 								0	 1		2  3  4  5  6  7
 							[Type=P][ID] + [X][Y][S][R][G][B]
 						*/
-						uint8_t packet[] = {'{',
-							(uint8_t)'P',
-							(uint8_t)identifier,
-							(uint8_t)100,
+						int packet[] = {'{',
+							'P',
+							identifier,
+							100,
 							//blobs[0].centroid.X,
-							(uint8_t)-200,
+							-200,
 							//blobs[0].centroid.Y,
-							(uint8_t)127,
+							127,
 							//(uint8_t)blobs[0].centroid.S,
-							(uint8_t)200,//colors[0].R,
-							(uint8_t)56,//colors[0].G,
-							(uint8_t)128,//colors[0].B,
+							200,//colors[0].R,
+							56,//colors[0].G,
+							128,//colors[0].B,
 							'}'
 						};
 						//std::string packet = "{\"x\":" + xstr + ",\"y\":" + ystr +"}";
-						char* packetChar = reinterpret_cast<char*>(packet);
+						// char* packetChar = reinterpret_cast<char*>(packet);
 						// const char* packet_cstr = packetChar.c_str();
-						printf("send packet '%s'\n",packetChar);
-						send(sock, packetChar, strlen(packetChar), 0);
+						for (int i = 0; i < sizeof(packet)/sizeof(packet[0]); i++)
+						{
+							printf("send byter '%d'.\n",packet[i]);
+						}
+						
+						printf("send packet.\n");
+						send(sock, packet, sizeof(packet), 0);
 					}
 
 					if (spoofInput){
