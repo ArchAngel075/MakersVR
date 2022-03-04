@@ -996,7 +996,7 @@ phase_blobdetection:
 							(uint8_t)127,
 							//(uint8_t)blobs[0].centroid.S,
 							(uint8_t)200,//colors[0].R,
-							(uint8_t)20,//colors[0].G,
+							(uint8_t)56,//colors[0].G,
 							(uint8_t)128,//colors[0].B,
 							'}'
 						};
