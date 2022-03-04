@@ -148,26 +148,6 @@ inline bool uart_fetchCmd()
 	return false;
 }
 
-void constructPacket(int I, int X, int Y, int S, int R, int G, int B)
-{
-	//{TIXYSRGB}
-	char out[50];
-	int plus = 43;
-	int minus = 45;
-	int psign;
-	//convert I : 43 45
-	psign = I > 0 ? 43 : 45;
-	char *num_char = static_cast<char*>(static_cast<void*>(&I));
-	for (int i = 0; i < sizeof(num_char)/sizeof(num_char[0]); i++)
-	{
-		printf("packet part : ");
-		printf(num_char[i]);
-		printf("\n");
-	}
-	
-	printf("packet : %s -> %d\n",num_char,psign);
-}
-
 int main(int argc, char **argv)
 {
 	// ---- Read arguments ----
@@ -986,8 +966,6 @@ phase_blobdetection:
 					send(sock, packetChar, strlen(packetChar), 0);
 				}
 
-				constructPacket(0,10,-20,4,100,-100,5);
-				
 				if(useSOCK && !spoofSOCK)
 				{
 					//int resultSend = send(sock, "ping", strlen("ping"), 0);
@@ -996,7 +974,6 @@ phase_blobdetection:
 						//fprintf(stderr,"recv: %s (%d)\n",strerror(errno),errno);
 						//printf("received error during attempt to send\n");
 					//}
-					
 					if(blobs.size() > 0){
 						//std::string xstr = std::to_string(blobs[0].centroid.X);
 						//std::string ystr = std::to_string(blobs[0].centroid.Y);
@@ -1009,19 +986,17 @@ phase_blobdetection:
 								0	 1		2  3  4  5  6  7
 							[Type=P][ID] + [X][Y][S][R][G][B]
 						*/
-						//for each integer 
-						//make positive and store as 4 bytes per digit
-						//	when converting if a integer is positive prepend byte '+' (43), else prepend byte '-' (45)
-						//for characters append byte 'NUL' (0) 4 times
-						//integers like "5" are 43 53 0 0 0
-						//"-10" is 45 49 48 0 0
 						uint8_t packet[] = {'{',
 							(uint8_t)'P',
 							(uint8_t)identifier,
-							(uint8_t)blobs[0].centroid.X,
-							(uint8_t)blobs[0].centroid.Y,
+							(uint8_t)100,
+							//blobs[0].centroid.X,
+							(uint8_t)-200,
+							//blobs[0].centroid.Y,
 							(uint8_t)blobs[0].centroid.S,
-							(uint8_t)colors[0].R,(uint8_t)colors[0].G,(uint8_t)colors[0].B,
+							(uint8_t)200,//colors[0].R,
+							(uint8_t)20,//colors[0].G,
+							(uint8_t)2,//colors[0].B,
 							'}'
 						};
 						//std::string packet = "{\"x\":" + xstr + ",\"y\":" + ystr +"}";
