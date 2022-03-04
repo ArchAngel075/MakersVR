@@ -990,17 +990,17 @@ phase_blobdetection:
 							'P',
 							identifier,
 							//100,
-							blobs[0].centroid.X,
+							(int)blobs[0].centroid.X,
 							//-200,
-							blobs[0].centroid.Y,
+							(int)blobs[0].centroid.Y,
 							//127,
-							blobs[0].centroid.S,
+							(int)blobs[0].centroid.S,
 							//200,
-							colors[0].R,
+							(int)colors[0].R,
 							//56,
-							colors[0].G,
+							(int)colors[0].G,
 							//128,
-							colors[0].B,
+							(int)colors[0].B,
 							'}'
 						};
 						//std::string packet = "{\"x\":" + xstr + ",\"y\":" + ystr +"}";
