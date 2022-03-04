@@ -161,7 +161,7 @@ void constructPacket(int I, int X, int Y, int S, int R, int G, int B)
 	for (int i = 0; i < len(num_char); i++)
 	{
 		printf("packet part : ");
-		printf(num_char[i])
+		printf(num_char[i]);
 		printf("\n");
 	}
 	
