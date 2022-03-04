@@ -154,11 +154,11 @@ void constructPacket(int I, int X, int Y, int S, int R, int G, int B)
 	char out[50];
 	int plus = 43;
 	int minus = 45;
-	int sign;
+	int psign;
 	//convert I : 43 45
-	sign = I > 0 ? 43 : 45;
+	psign = I > 0 ? 43 : 45;
 	char const *num_char = std::to_string(I).c_str();
-	printf("packet : %s \n",num_char);
+	printf("packet : %s -> %d\n",num_char,psign);
 }
 
 int main(int argc, char **argv)
