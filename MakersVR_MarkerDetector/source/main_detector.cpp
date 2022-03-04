@@ -158,7 +158,7 @@ void constructPacket(int I, int X, int Y, int S, int R, int G, int B)
 	//convert I : 43 45
 	psign = I > 0 ? 43 : 45;
 	char *num_char = static_cast<char*>(static_cast<void*>(&I));
-	for (int i = 0; i < len(num_char); i++)
+	for (int i = 0; i < sizeof(num_char)/sizeof(num_char[0]); i++)
 	{
 		printf("packet part : ");
 		printf(num_char[i]);
