@@ -158,6 +158,13 @@ void constructPacket(int I, int X, int Y, int S, int R, int G, int B)
 	//convert I : 43 45
 	psign = I > 0 ? 43 : 45;
 	char const *num_char = std::to_string(I).c_str();
+	for (int i = 0; i < len(num_char); i++)
+	{
+		print("packet part : ");
+		print(num_char[i])
+		print("\n");
+	}
+	
 	printf("packet : %s -> %d\n",num_char,psign);
 }
 
