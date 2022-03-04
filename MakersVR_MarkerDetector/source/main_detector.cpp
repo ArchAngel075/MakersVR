@@ -148,6 +148,19 @@ inline bool uart_fetchCmd()
 	return false;
 }
 
+void constructPacket(int I, int X, int Y, int S, int R, int G, int B)
+{
+	//{TIXYSRGB}
+	char* [50] out;
+	int plus = 43;
+	int minus = 45;
+	int sign;
+	//convert I : 43 45
+	sign = I > 0 ? 43 : 45;
+	char const *num_char = std::to_string(I).c_str();
+	printf("packet : %s \n",num_char);
+}
+
 int main(int argc, char **argv)
 {
 	// ---- Read arguments ----
@@ -974,6 +987,7 @@ phase_blobdetection:
 						//fprintf(stderr,"recv: %s (%d)\n",strerror(errno),errno);
 						//printf("received error during attempt to send\n");
 					//}
+					constructPacket(0,10,-20,4,100,-100,5);
 					if(blobs.size() > 0){
 						//std::string xstr = std::to_string(blobs[0].centroid.X);
 						//std::string ystr = std::to_string(blobs[0].centroid.Y);
@@ -986,38 +1000,26 @@ phase_blobdetection:
 								0	 1		2  3  4  5  6  7
 							[Type=P][ID] + [X][Y][S][R][G][B]
 						*/
-						int packet[] = {(int)'{',
-							'[','t','=',
-							(int)'P',
-							']',
-							'[','i','=',
-							(int)identifier,
-							'[','x','=',
-							-100,//(int)blobs[0].centroid.X,
-							']',
-							'[','y','=',
-							200,//(int)blobs[0].centroid.Y,
-							']',
-							'[','s','=',
-							99,//(int)blobs[0].centroid.S,
-							']',
-							//(int)colors[0].R,(int)colors[0].G,(int)colors[0].B,
-							'[','r','=',
-							10,
-							']',
-							'[','g','=',
-							-5,
-							']',
-							'[','v','=',
-							3,
-							']',
-							(int)'}'
+						//for each integer 
+						//make positive and store as 4 bytes per digit
+						//	when converting if a integer is positive prepend byte '+' (43), else prepend byte '-' (45)
+						//for characters append byte 'NUL' (0) 4 times
+						//integers like "5" are 43 53 0 0 0
+						//"-10" is 45 49 48 0 0
+						uint8_t packet[] = {'{',
+							(uint8_t)'P',
+							(uint8_t)identifier,
+							(uint8_t)blobs[0].centroid.X,
+							(uint8_t)blobs[0].centroid.Y,
+							(uint8_t)blobs[0].centroid.S,
+							(uint8_t)colors[0].R,(uint8_t)colors[0].G,(uint8_t)colors[0].B,
+							'}'
 						};
 						//std::string packet = "{\"x\":" + xstr + ",\"y\":" + ystr +"}";
 						char* packetChar = reinterpret_cast<char*>(packet);
 						// const char* packet_cstr = packetChar.c_str();
 						printf("send packet '%s'\n",packetChar);
-						send(sock, packet, sizeof(packet), 0);
+						send(sock, packetChar, strlen(packetChar), 0);
 					}
 
 					if (spoofInput){
