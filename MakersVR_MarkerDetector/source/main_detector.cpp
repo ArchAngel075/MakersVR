@@ -160,9 +160,9 @@ void constructPacket(int I, int X, int Y, int S, int R, int G, int B)
 	char const *num_char = static_cast<char*>(static_cast<void*>(&I));
 	for (int i = 0; i < len(num_char); i++)
 	{
-		print("packet part : ");
-		print(num_char[i])
-		print("\n");
+		printf("packet part : ");
+		printf(num_char[i])
+		printf("\n");
 	}
 	
 	printf("packet : %s -> %d\n",num_char,psign);
