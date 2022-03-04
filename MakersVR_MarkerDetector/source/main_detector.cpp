@@ -989,9 +989,9 @@ phase_blobdetection:
 						uint8_t packet[] = {'{',
 							(uint8_t)'P',
 							(uint8_t)identifier,
-							(uint8_t)blobs[0].centroid.X,
-							(uint8_t)blobs[0].centroid.Y,
-							(uint8_t)blobs[0].centroid.S,
+							(int8_t)blobs[0].centroid.X,
+							(int8_t)blobs[0].centroid.Y,
+							(int8_t)blobs[0].centroid.S,
 							(uint8_t)colors[0].R,(uint8_t)colors[0].G,(uint8_t)colors[0].B,
 							'}'
 						};
