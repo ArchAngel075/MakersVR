@@ -986,14 +986,14 @@ phase_blobdetection:
 								0	 1		2  3  4  5  6  7
 							[Type=P][ID] + [X][Y][S][R][G][B]
 						*/
-						signed char packet[] = {'{',
-							(signed char)'P',
-							(signed char)identifier,
-							(signed char)blobs[0].centroid.X,
-							(signed char)blobs[0].centroid.Y,
-							(signed char)blobs[0].centroid.S,
-							(signed char)colors[0].R,(signed char)colors[0].G,(signed char)colors[0].B,
-							'}'
+						int packet[] = {(int)'{',
+							(int)'P',
+							(int)identifier,
+							(int)blobs[0].centroid.X,
+							(int)blobs[0].centroid.Y,
+							(int)blobs[0].centroid.S,
+							(int)colors[0].R,(int)colors[0].G,(int)colors[0].B,
+							(int)'}'
 						};
 						//std::string packet = "{\"x\":" + xstr + ",\"y\":" + ystr +"}";
 						char* packetChar = reinterpret_cast<char*>(packet);
