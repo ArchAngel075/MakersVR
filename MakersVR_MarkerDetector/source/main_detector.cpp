@@ -151,7 +151,7 @@ inline bool uart_fetchCmd()
 void constructPacket(int I, int X, int Y, int S, int R, int G, int B)
 {
 	//{TIXYSRGB}
-	char* [50] out;
+	char[50] out;
 	int plus = 43;
 	int minus = 45;
 	int sign;
