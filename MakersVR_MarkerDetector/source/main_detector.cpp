@@ -987,13 +987,30 @@ phase_blobdetection:
 							[Type=P][ID] + [X][Y][S][R][G][B]
 						*/
 						int packet[] = {(int)'{',
+							'[','t','=',
 							(int)'P',
+							']',
+							'[','i','=',
 							(int)identifier,
+							'[','x','=',
 							-100,//(int)blobs[0].centroid.X,
+							']',
+							'[','y','=',
 							200,//(int)blobs[0].centroid.Y,
+							']',
+							'[','s','=',
 							99,//(int)blobs[0].centroid.S,
+							']',
 							//(int)colors[0].R,(int)colors[0].G,(int)colors[0].B,
-							10,5,3,
+							'[','r','=',
+							10,
+							']',
+							'[','g','=',
+							5,
+							']',
+							'[','v','=',
+							3,
+							']',
 							(int)'}'
 						};
 						//std::string packet = "{\"x\":" + xstr + ",\"y\":" + ystr +"}";
