@@ -986,15 +986,17 @@ phase_blobdetection:
 								0	 1		2  3  4  5  6  7
 							[Type=P][ID] + [X][Y][S][R][G][B]
 						*/
+
+						Cluster *blob = &blobs[i];
 						int packet[] = {'{',
 							'P',
 							identifier,
 							//264,
-							(int)blobs[0].centroid.X,
+							(int)blob->centroid.X,
 							//-200,
-							(int)blobs[0].centroid.Y,
+							(int)blob->centroid.Y,
 							//127,
-							(int)blobs[0].centroid.S,
+							(int)blob->centroid.S,
 							//200,
 							(int)colors[0].R,
 							//56,
