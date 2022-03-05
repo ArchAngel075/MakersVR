@@ -911,7 +911,7 @@ phase_blobdetection:
 					int cY = pY[y * srcStride + x];
 					int cV = pV[((y/2) * (srcStride/2)) + (x/2)];
 					int cU = pU[((y/2) * (srcStride/2)) + (x/2)];
-					printf("\tcolY : %d\tcolU : %d\tcolV : %d\t size : %d %d %d\n", cY,cU,cV, sizeof(pY), sizeof(pV), sizeof(pU));
+					//printf("\tcolY : %d\tcolU : %d\tcolV : %d\t size : %d %d %d\n", cY,cU,cV, sizeof(pY), sizeof(pV), sizeof(pU));
 					
 					int colR = (int)std::min(255,(int)std::max(cY + 1.402 * (cV - 128),(double)0));
 					int colG = std::min(255,(int)std::max(cY - 0.344 * (cU - 128) - 0.714 * (cV - 128),(double)0));
@@ -927,7 +927,7 @@ phase_blobdetection:
 						coll = 'B';	
 					}
 					
-					printf("\t\t col RGB %d, %d, %d [%c]\n", colR,colG,colB, coll);
+					printf("\t\t col RGBS %d, %d, %d [%c] %f\n", colR,colG,colB, coll, blobs[i].centroid.S);
 					colors[i] = Color{(float)colR, (float)colG, (float)colB};
 					//printf("Blob %d has %d blobs!\n", i, (int)blobs[i].dots.size());
 					//printf("Blob %d has position %d , %d!\n", i, (int)blobs[i].centroid.X, (int)blobs[i].centroid.Y);
