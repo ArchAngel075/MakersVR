@@ -997,7 +997,7 @@ phase_blobdetection:
 								//-200,
 								(int)blob->centroid.Y,
 								//127,
-								(int)blob->centroid.S,
+								(int)(blob->centroid.S*100),
 								//200,
 								(int)colors[i].R,
 								//56,
