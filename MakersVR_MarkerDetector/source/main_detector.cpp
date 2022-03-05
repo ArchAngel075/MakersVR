@@ -986,35 +986,37 @@ phase_blobdetection:
 								0	 1		2  3  4  5  6  7
 							[Type=P][ID] + [X][Y][S][R][G][B]
 						*/
+						for (int i = 0; i < blobs.size(); i++){
+							Cluster *blob = &blobs[i];
 
-						Cluster *blob = &blobs[i];
-						int packet[] = {'{',
-							'P',
-							identifier,
-							//264,
-							(int)blob->centroid.X,
-							//-200,
-							(int)blob->centroid.Y,
-							//127,
-							(int)blob->centroid.S,
-							//200,
-							(int)colors[0].R,
-							//56,
-							(int)colors[0].G,
-							//128,
-							(int)colors[0].B,
-							'}'
-						};
-						//std::string packet = "{\"x\":" + xstr + ",\"y\":" + ystr +"}";
-						// char* packetChar = reinterpret_cast<char*>(packet);
-						// const char* packet_cstr = packetChar.c_str();
-						for (int i = 0; i < sizeof(packet)/sizeof(packet[0]); i++)
-						{
-							printf("send byter '%d'.\n",packet[i]);
+							int packet[] = {'{',
+								'P',
+								identifier,
+								//264,
+								(int)blob->centroid.X,
+								//-200,
+								(int)blob->centroid.Y,
+								//127,
+								(int)blob->centroid.S,
+								//200,
+								(int)colors[i].R,
+								//56,
+								(int)colors[i].G,
+								//128,
+								(int)colors[i].B,
+								'}'
+							};
+							//std::string packet = "{\"x\":" + xstr + ",\"y\":" + ystr +"}";
+							// char* packetChar = reinterpret_cast<char*>(packet);
+							// const char* packet_cstr = packetChar.c_str();
+							for (int i = 0; i < sizeof(packet)/sizeof(packet[0]); i++)
+							{
+								printf("send byter '%d'.\n",packet[i]);
+							}
+							
+							printf("send packet.\n");
+							send(sock, packet, sizeof(packet), 0);
 						}
-						
-						printf("send packet.\n");
-						send(sock, packet, sizeof(packet), 0);
 					}
 
 					if (spoofInput){
