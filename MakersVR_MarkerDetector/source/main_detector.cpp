@@ -926,9 +926,10 @@ phase_blobdetection:
 					if(colB > colR && colB > colG){
 						coll = 'B';	
 					}
-					
-					printf("\t#%d RGB (X,Y) S %d, %d, %d [%c] | ( %f , %f ) %f\n", i ,colR,colG,colB, coll, blobs[i].centroid.X, blobs[i].centroid.Y ,blobs[i].centroid.S);
 					colors[i] = Color{(float)colR, (float)colG, (float)colB};
+					if(coll != 'G'){
+						printf("\t#%d RGB (X,Y) S %d, %d, %d [%c] | ( %f , %f ) %f\n", i ,colR,colG,colB, coll, blobs[i].centroid.X, blobs[i].centroid.Y ,blobs[i].centroid.S);
+					}
 					//printf("Blob %d has %d blobs!\n", i, (int)blobs[i].dots.size());
 					//printf("Blob %d has position %d , %d!\n", i, (int)blobs[i].centroid.X, (int)blobs[i].centroid.Y);
 				}
