@@ -927,7 +927,7 @@ phase_blobdetection:
 						coll = 'B';	
 					}
 					colors[i] = Color{(float)colR, (float)colG, (float)colB};
-					if(coll != 'G'){
+					if(coll != 'G' && coll != 'N'){
 						printf("\t#%d RGB (X,Y) S %d, %d, %d [%c] | ( %f , %f ) %f\n", i ,colR,colG,colB, coll, blobs[i].centroid.X, blobs[i].centroid.Y ,blobs[i].centroid.S);
 					}
 					//printf("Blob %d has %d blobs!\n", i, (int)blobs[i].dots.size());
