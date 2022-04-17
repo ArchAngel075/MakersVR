@@ -955,7 +955,7 @@ phase_blobdetection:
 				if(useSOCK && spoofSOCK)
 				{
 					uint8_t packet[] = {
-						'{',
+						'{','P','0',
 						(uint8_t)1.0f,
 						(uint8_t)1.0f,
 						(uint8_t)4.0f,
